@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Woof</title>
+    <link rel="stylesheet" href="./main.css">
+  </head>
+  <body>
+    <div id="container">
+      <div class="main">
+        <section>
+          <div>
+            <img src="./woof.svg" alt="Woof Logo" style="max-height: 190px;">
+          </div>
+          <h1>
+            woof
+          </h1>
+          <h3>🐶 command line applications made as easy as fetch</h3>
+          <pre>
+            <code> npm install woof </code>
+          </pre>
+          <hr/>
+          <pre class="example">
+const cli = woof(`
+    Usage
+      $ foo [input]
+
+    Options
+      --unicorn, -u [type]    Include a unicorn [rainbow|sea]
+
+    Examples
+
+      $ foo --unicorn rainbow
+      🌈 🦄 🌈
+`, {
+  flags: {
+    unicorn: {
+      type: 'string',
+      alias: 'u',
+      default: 'rainbow'
+    }
+  }
+});
+          </pre>
+          </br>
+          <a class="button" href="https://github.com/gabrielcsapo/woof" target="_blank">Github</a>
+          <a class="button" href="https://github.com/gabrielcsapo/woof" target="_blank">Docs</a>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
