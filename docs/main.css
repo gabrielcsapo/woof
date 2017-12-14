@@ -7,10 +7,6 @@ html, body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-body {
-  margin-top: 20px;
-}
-
 .main {
   color: #3e3e3e;
   text-align: center;
@@ -21,7 +17,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  margin: 50px auto;
 }
 
 h3, h4 {
@@ -53,15 +49,20 @@ pre.example {
   white-space: pre;
 }
 
+hr {
+  border-color: rgba(171, 103, 9, 0.32)
+}
+
 pre {
   border-radius: 5px;
   margin: 0 auto;
   text-align: left;
   background-color: rgba(171, 103, 9, 0.32);
-  color: #3e3e3e;
+  color: white;
   padding: 10px;
   white-space: normal;
 }
+
 pre code {
   display: block;
 }
