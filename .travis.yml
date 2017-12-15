@@ -1,0 +1,12 @@
+language: node_js
+script:
+  - npm install lcov-server -g
+  - npm run lint
+  - npm run coverage
+  - cat coverage/lcov.info | lcov-server --upload https://lcov-server.gabrielcsapo.com
+node_js:
+  - "6"
+  - "8"
+os:
+  - linux
+sudo: false
