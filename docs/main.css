@@ -16,12 +16,7 @@ html, body {
   min-height: 100vh;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin: 50px auto;
-}
-
-h3, h4 {
-  font-weight: 300;
+  justify-content: center space-between;
 }
 
 .button {
@@ -61,10 +56,42 @@ pre {
   color: white;
   padding: 10px;
   white-space: normal;
+  overflow: scroll;
 }
 
 pre code {
+  font-family: monospace;
   display: block;
+}
+
+p {
+  margin: 0;
+}
+
+.navbar {
+  clear:both;
+  display: inline-block;
+  width: 100%;
+}
+.navbar .content {
+  width: 90%;
+  margin: 0 auto;
+}
+.navbar-brand {
+  display: inline-block;
+}
+.navbar-brand > * {
+  color: #3e3e3e;
+  text-decoration: none;
+}
+.navbar-content {
+  float: right;
+}
+
+.link {
+  text-decoration: none;
+  color: #3e3e3e;
+  border-bottom: 1px dotted #3e3e3e;
 }
 
 #container {

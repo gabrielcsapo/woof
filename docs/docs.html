@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Woof</title>
+    <link rel="stylesheet" href="./main.css">
+    <style media="screen">
+      * {
+        font-family: 'Helvetica Neue', 'Arial', sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="content">
+        <h3 class="navbar-brand">
+          <a href="./index.html">
+            woof
+          </a>
+        </h3>
+
+        <div class="navbar-content">
+          <a class="button" href="https://github.com/gabrielcsapo/woof" target="_blank">Github</a>
+        </div>
+      </div>
+    </div>
+    <div id="container">
+      <div class="main" style="justify-content:normal;text-align:left;">
+        <div style="width: 50%;">
+          <h2> Getting Started </h2>
+          <p> <a href="https://github.com/gabrielcsapo/woof" class="link">woof</a> helps make command line applications </p>
+
+          <h3> Install </h3>
+          <pre>
+            <code> npm install woof -g </code>
+          </pre>
+
+          <h3> Usage </h3>
+          <pre class="example">
+  const woof = require('woof');
+  const cli = woof(`
+    Usage
+    $ foo [input]
+
+    Options
+    --unicorn, -u [type]    Include a unicorn [rainbow|sea]
+
+    Examples
+
+    $ foo --unicorn rainbow
+    🌈 🦄 🌈
+  `, {
+    flags: {
+      unicorn: {
+        type: 'string',
+        alias: 'u',
+        default: 'rainbow'
+      }
+    }
+  });</pre>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
