@@ -21,7 +21,7 @@ module.exports = function Woof(helpMessage, options={}) {
   const parentDir = path.dirname(module.parent.filename);
 
   let program = {};
-  let { args=process.argv.slice(2), flags={}, commands={} } = options;
+  let { version, args=process.argv.slice(2), flags={}, commands={} } = options;
 
   // sets the defaults
   Object.keys(flags).forEach((flag) => {
@@ -31,17 +31,22 @@ module.exports = function Woof(helpMessage, options={}) {
   });
 
   args.forEach((arg, i) => {
+    if(program['version'] || program['help']) return;
+
     if(arg === 'help' || arg == '--help') {
       console.log(`\n${dedent(helpMessage)}`); // eslint-disable-line
-      process.exit(0);
+      program['help'] = true;
     }
     if(arg === 'version' || arg === '--version') {
+      if(version) {
+        console.log(`v${version}`); // eslint-disable-line
+      }
       try {
         console.log(`v${require(`${parentDir}/package.json`).version}`); // eslint-disable-line
       } catch(ex) {
         console.log('v?'); // eslint-disable-line
       }
-      process.exit(0);
+      program['version'] = true;
     }
 
     Object.keys(flags).forEach((flag) => {

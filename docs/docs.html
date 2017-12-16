@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta name="viewport" content="width=device-width initial-scale=1"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
     <title>Woof</title>
@@ -28,39 +28,91 @@
       </div>
     </div>
     <div id="container">
-      <div class="main" style="justify-content:normal;text-align:left;">
+      <div class="main" style="justify-content:normal;text-align:left;margin-bottom: 50px;">
         <div style="width: 50%;">
-          <h2> Getting Started </h2>
-          <p> <a href="https://github.com/gabrielcsapo/woof" class="link">woof</a> helps make command line applications </p>
+          <h2>
+            Getting Started
+          </h2>
+          <p>
+            <a href="https://github.com/gabrielcsapo/woof" class="link">woof</a>
+            helps make command line applications
+          </p>
 
-          <h3> Install </h3>
+          <h3>
+            Install
+          </h3>
           <pre>
             <code> npm install woof -g </code>
           </pre>
 
-          <h3> Usage </h3>
+          <h3>
+            Usage
+          </h3>
           <pre class="example">
-  const woof = require('woof');
-  const cli = woof(`
-    Usage
-    $ foo [input]
+const woof = require('woof');
+const cli = woof(`
+  Usage
+  $ foo [input]
 
-    Options
-    --unicorn, -u [type]    Include a unicorn [rainbow|sea]
+  Options
+  --unicorn, -u [type]    Include a unicorn [rainbow|sea]
 
-    Examples
+  Examples
 
-    $ foo --unicorn rainbow
-    🌈 🦄 🌈
-  `, {
-    flags: {
-      unicorn: {
-        type: 'string',
-        alias: 'u',
-        default: 'rainbow'
-      }
+  $ foo --unicorn rainbow
+  🌈 🦄 🌈
+ `, {
+  flags: {
+    unicorn: {
+      type: 'string',
+      alias: 'u',
+      default: 'rainbow'
     }
-  });</pre>
+  }
+});</pre>
+
+        <h3>
+          Options
+        </h3>
+        <pre> woof(helpMenu, options) </pre>
+        <br/>
+        <ul>
+          <li>
+            <b>helpMenu (mandatory|String)</b> <span> the string to be output if <code>help, --help</code> are parsed from args</span>
+          </li>
+          <li>
+            <b>options (mandatory|Object)</b> <span> options object </span>
+          </li>
+          <li>
+            <b>options.version (optional|String)</b> <span> version to be output if <code>version, --version</code> are parsed from args, by default this is the version from <code>package.json</code></span>
+          </li>
+          <li>
+            <b>options.args (optional|Array)</b> <span> instead of parsing from <code>process.argv</code> this array will be used to parse arguments from.</span>
+          </li>
+          <li>
+            <b>options.flags (optional|Object)</b> <span> describes the flags that should be parsed. The key is the name of the argument that the value will be mapped too.
+              <br/>
+              <br/>
+              <pre class="example">
+$name: {
+  type: 'string|boolean|number',
+  alias: String,
+  default: String
+}</pre>
+            </span>
+          </li>
+          <li>
+            <b>options.commands (optional|Object)</b> <span> describes the commands that should be parsed. The key is the name of the argument that the value will be mapped too, if the command is found, it will be set to true.
+              <br/>
+              <br/>
+              <pre class="example">
+$name: {
+  alias: String,
+}</pre>
+            </span>
+          </li>
+        </ul>
+
         </div>
       </div>
     </div>

@@ -39,8 +39,8 @@ html, body {
 }
 
 pre.example {
-  background-color: rgba(62, 62, 62, 0.74);
-  color: #ededed;
+  background-color: #3e3e3e;
+  color: #f5f5f5;
   white-space: pre;
 }
 
@@ -52,7 +52,7 @@ pre {
   border-radius: 5px;
   margin: 0 auto;
   text-align: left;
-  background-color: rgba(171, 103, 9, 0.32);
+  background-color: rgba(171, 103, 9, 0.42);
   color: white;
   padding: 10px;
   white-space: normal;
@@ -60,12 +60,27 @@ pre {
 }
 
 pre code {
+  background-color: transparent;
+  color: white;
   font-family: monospace;
   display: block;
 }
 
+code {
+  color: #ff6565;
+}
+
 p {
   margin: 0;
+}
+
+ul {
+  list-style:none;
+  padding: 0;
+}
+
+ul li {
+  margin-top: 5px;
 }
 
 .navbar {
