@@ -1,3 +1,8 @@
+# 0.2.0 (01/04/2017)
+
+- augments command and flag objects into hashmaps for faster lookup than array traversal
+- condenses help and version logic by also making lookup via hashmap
+
 # 0.1.0 (12/15/2017)
 
 - adds additional tests

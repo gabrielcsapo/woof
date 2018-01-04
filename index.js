@@ -1,6 +1,6 @@
 const path = require('path');
 
-const { dedent } = require('./util');
+const { dedent, flatten } = require('./util');
 
 /**
  * takes a help message and options and parses argv
@@ -30,46 +30,53 @@ module.exports = function Woof(helpMessage, options={}) {
     }
   });
 
+  // make the flag and command objects a hashmap for easy access
+  let flagMap = flatten(flags, true, true);
+  let commandMap = flatten(commands, true);
+  let versionMap = { 'version': true, '--version': true };
+  let helpMap = { 'help': true, '--help': true };
+
+  // loop through the args, either command line or given
   args.forEach((arg, i) => {
+    // The user has requested either of these values and further arguments should not be parsed
     if(program['version'] || program['help']) return;
 
-    if(arg === 'help' || arg == '--help') {
-      console.log(`\n${dedent(helpMessage)}`); // eslint-disable-line
+    if(helpMap[arg]) {
       program['help'] = true;
+      // Use the predefined help message to render a help screen
+      process.stdout.write(`\n${dedent(helpMessage)}\n`);
     }
-    if(arg === 'version' || arg === '--version') {
-      if(version) {
-        console.log(`v${version}`); // eslint-disable-line
-      }
-      try {
-        console.log(`v${require(`${parentDir}/package.json`).version}`); // eslint-disable-line
-      } catch(ex) {
-        console.log('v?'); // eslint-disable-line
-      }
+    if(versionMap[arg]) {
       program['version'] = true;
+
+      // If the version is provided, just use that
+      if(version) process.stdout.write(`v${version}\n`);
+      // try to get the version from the current applications package.json
+      try {
+        process.stdout.write(`v${require(`${parentDir}/package.json`).version}\n`);
+      } catch(ex) {
+        process.stdout.write('v?\n');
+      }
     }
 
-    Object.keys(flags).forEach((flag) => {
-      if(`--${flag}` === arg || `-${flags[flag].alias}` === arg) {
-        switch(flags[flag].type) {
-          case 'string':
-            program[flag] = args[i + 1];
-          break;
-          case 'integer':
-            program[flag] = parseInt(args[i + 1]);
-          break;
-          case 'boolean':
-          default:
-            program[flag] = true;
-          break;
-        }
+    // check the flag maps see if it exists
+    if(flagMap[arg]) {
+      let { type, name } = flagMap[arg];
+      switch(type) {
+        case 'string':
+          program[name] = args[i + 1];
+        break;
+        case 'integer':
+          program[name] = parseInt(args[i + 1]);
+        break;
+        case 'boolean':
+        default:
+          program[name] = true;
+        break;
       }
-    });
-    Object.keys(commands).forEach((command) => {
-      if(`${command}` === arg || `-${command.alias}` === arg) {
-        program[command] = true;
-      }
-    });
+    }
+
+    if(commandMap[arg]) program[commandMap[arg].name] = true;
   });
 
   return program;

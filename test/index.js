@@ -58,9 +58,9 @@ test('woof', (t) => {
 
   t.test('should respond with help menu', (t) => {
     let logs = [];
-    const oldLog = console.log;
+    const oldLog = process.stdout.write;
 
-    console.log = function() {
+    process.stdout.write = function() {
       logs.push(Array.prototype.join.call(arguments, ' '));
     };
 
@@ -104,18 +104,18 @@ test('woof', (t) => {
         }
       }
     });
-    console.log = oldLog;
+    process.stdout.write = oldLog;
 
-    t.deepEqual(logs[0], '\n Usage\n $ foo <input>\n\n Commands:\n   start, -s               Starts foo!\n\n Options\n   --rainbow, -r           Include a rainbow\n   --unicorn, -u [type]    Include a unicorn [rainbow|sea]\n\n Examples\n   $ foo unicorns --rainbow\n   🌈 unicorns 🌈\n\n   $ foo --unicorn rainbow\n   🌈 🦄 🌈\n\n   $ foo --unicorn sea\n   🌊 🦄 🌊\n    ');
+    t.deepEqual(logs[0], '\n Usage\n $ foo <input>\n\n Commands:\n   start, -s               Starts foo!\n\n Options\n   --rainbow, -r           Include a rainbow\n   --unicorn, -u [type]    Include a unicorn [rainbow|sea]\n\n Examples\n   $ foo unicorns --rainbow\n   🌈 unicorns 🌈\n\n   $ foo --unicorn rainbow\n   🌈 🦄 🌈\n\n   $ foo --unicorn sea\n   🌊 🦄 🌊\n    \n');
     t.deepEqual(cli, { unicorn: 'rainbow', help: true });
     t.end();
   });
 
   t.test('should respond with version', (t) => {
     let logs = [];
-    const oldLog = console.log;
+    const oldLog = process.stdout.write;
 
-    console.log = function() {
+    process.stdout.write = function() {
       logs.push(Array.prototype.join.call(arguments, ' '));
     };
 
@@ -159,18 +159,18 @@ test('woof', (t) => {
         }
       }
     });
-    console.log = oldLog;
+    process.stdout.write = oldLog;
 
-    t.deepEqual(logs[0], 'v?');
+    t.deepEqual(logs[0], 'v?\n');
     t.deepEqual(cli, { unicorn: 'rainbow', version: true });
     t.end();
   });
 
   t.test('should respond with overriden version', (t) => {
     let logs = [];
-    const oldLog = console.log;
+    const oldLog = process.stdout.write;
 
-    console.log = function() {
+    process.stdout.write = function() {
       logs.push(Array.prototype.join.call(arguments, ' '));
     };
 
@@ -215,9 +215,9 @@ test('woof', (t) => {
         }
       }
     });
-    console.log = oldLog;
+    process.stdout.write = oldLog;
 
-    t.deepEqual(logs[0], 'v1.0.0');
+    t.deepEqual(logs[0], 'v1.0.0\n');
     t.deepEqual(cli, { unicorn: 'rainbow', version: true });
     t.end();
   });
