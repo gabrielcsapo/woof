@@ -50,12 +50,15 @@ module.exports = function Woof(helpMessage, options={}) {
       program['version'] = true;
 
       // If the version is provided, just use that
-      if(version) process.stdout.write(`v${version}\n`);
-      // try to get the version from the current applications package.json
-      try {
-        process.stdout.write(`v${require(`${parentDir}/package.json`).version}\n`);
-      } catch(ex) {
-        process.stdout.write('v?\n');
+      if(version) {
+        process.stdout.write(`v${version}\n`);
+      } else {
+        // try to get the version from the current applications package.json
+        try {
+          process.stdout.write(`v${require(`${parentDir}/package.json`).version}\n`);
+        } catch(ex) {
+          process.stdout.write('v?\n');
+        }
       }
     }
 
