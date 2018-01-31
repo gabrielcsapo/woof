@@ -34,9 +34,16 @@ const cli = woof(`
     unicorn: {
       type: 'string',
       alias: 'u',
-      default: 'rainbow'
+      default: 'rainbow',
+      validate: function(value) {
+        return ['rainbow', 'sea'].indexOf(value) === -1 ? `please providate a valid unicorn type (rainbow|sea), '${value}' is not a valid option` : true;
+      }
     }
   }
 });
 
-console.log(cli);
+if(cli.error) {
+  console.log(cli.error.message);
+} else {
+  console.log(cli);
+}

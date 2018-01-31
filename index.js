@@ -39,7 +39,7 @@ module.exports = function Woof(helpMessage, options={}) {
   // loop through the args, either command line or given
   args.forEach((arg, i) => {
     // The user has requested either of these values and further arguments should not be parsed
-    if(program['version'] || program['help']) return;
+    if(program['error'] || program['version'] || program['help']) return;
 
     if(helpMap[arg]) {
       program['help'] = true;
@@ -65,6 +65,7 @@ module.exports = function Woof(helpMessage, options={}) {
     // check the flag maps see if it exists
     if(flagMap[arg]) {
       let { type, name } = flagMap[arg];
+
       switch(type) {
         case 'string':
           program[name] = args[i + 1];
@@ -76,6 +77,20 @@ module.exports = function Woof(helpMessage, options={}) {
         default:
           program[name] = true;
         break;
+      }
+
+      // they have passed in the validate argument and want to validate the value that we have collected
+      if(typeof flagMap[arg]['validate'] == 'function') {
+        let isValid = flagMap[arg]['validate'](program[name]);
+
+        // isValid is boolean and is falsey that will trigger the default throw logic
+        if(typeof isValid == 'boolean' && !isValid) {
+          program['error'] = `the value passed into ${arg} is not acceptable: ${program[name]}`;
+        }
+        // isValid is a string that was passed by the validate function
+        if(typeof isValid == 'string') {
+          program['error'] = new Error(isValid);
+        }
       }
     }
 

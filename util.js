@@ -40,9 +40,10 @@ module.exports.dedent = function dedent(str) {
 module.exports.flatten = function flatten(flags, allowShorthand, allowExtendedShorthand) {
   let map = {};
   Object.keys(flags).forEach((k) => {
-    const { alias, type } = flags[k];
+    const { alias, type, validate } = flags[k];
     let value = { name: k };
     if(type) value.type = type;
+    if(validate) value.validate = validate;
 
     // include the name as value that can be invoked
     // also include the shorthands if allowed

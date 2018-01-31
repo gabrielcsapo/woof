@@ -5,11 +5,11 @@ const test = require('tape');
 const woof = require('../');
 
 test('woof', (t) => {
-  t.plan(5);
+  t.plan(7);
 
   t.test('should be able to take in args argument', (t) => {
     const cli = woof('', {
-      args: ['start', '--unicorn', 'rainbow', '--rainbow'],
+      args: ['start', '--unicorn', 'rainbow', '--rainbow', '--amount', '10'],
       commands: {
         start: {
           alias: 's'
@@ -20,6 +20,11 @@ test('woof', (t) => {
           type: 'boolean',
           alias: 'r'
         },
+        amount: {
+          type: 'integer',
+          alias: 'a',
+          amount: 1
+        },
         unicorn: {
           type: 'string',
           alias: 'u',
@@ -28,7 +33,7 @@ test('woof', (t) => {
       }
     });
 
-    t.deepEqual(cli, { unicorn: 'rainbow', start: true, rainbow: true });
+    t.deepEqual(cli, { unicorn: 'rainbow', start: true, rainbow: true, amount: 10 });
     t.end();
   });
 
@@ -219,6 +224,46 @@ test('woof', (t) => {
 
     t.deepEqual(logs[0], 'v1.0.0\n');
     t.deepEqual(cli, { unicorn: 'rainbow', version: true });
+    t.end();
+  });
+
+  t.test('should respond with a default validate error', (t) => {
+    const cli = woof('',
+    {
+      args: ['--unicorn', 'blue'],
+      flags: {
+        unicorn: {
+          type: 'string',
+          alias: 'u',
+          default: 'rainbow',
+          validate: function(value) {
+            return ['rainbow', 'sea'].indexOf(value) > -1;
+          }
+        }
+      }
+    });
+
+    t.deepEqual(cli, { unicorn: 'blue', error: 'the value passed into --unicorn is not acceptable: blue' });
+    t.end();
+  });
+
+  t.test('should respond with a custom validate error', (t) => {
+    const cli = woof('',
+    {
+      args: ['--unicorn', 'blue'],
+      flags: {
+        unicorn: {
+          type: 'string',
+          alias: 'u',
+          default: 'rainbow',
+          validate: function(value) {
+            return ['rainbow', 'sea'].indexOf(value) === -1 ? `please providate a valid unicorn type (rainbow|sea), '${value}' is not a valid option` : true;
+          }
+        }
+      }
+    });
+
+    t.deepEqual(cli, { unicorn: 'blue', error: new Error('please providate a valid unicorn type (rainbow|sea), \'blue\' is not a valid option') });
     t.end();
   });
 });

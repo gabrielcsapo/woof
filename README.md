@@ -59,7 +59,10 @@ const cli = woof(`
     unicorn: {
       type: 'string',
       alias: 'u',
-      default: 'rainbow'
+      default: 'rainbow',
+      validate: function(value) {
+        return ['rainbow', 'sea'].indexOf(value) > -1;
+      }
     }
   }
 });

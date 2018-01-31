@@ -1,9 +1,6 @@
 const test = require('tape');
 
-const {
-  dedent,
-  flatten
-} = require('../util');
+const { dedent, flatten } = require('../util');
 
 test('util', (t) => {
   t.plan(2);

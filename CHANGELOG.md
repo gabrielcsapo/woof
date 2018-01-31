@@ -1,3 +1,8 @@
+# 0.3.0 (01/31/2018)
+
+- adds a validate parameter on flags that will let the developer validate content while its being parsed. If there is an error with the parsing it will set the error object on the output.
+- adds tests for integer parsing flags
+
 # 0.2.1 (01/09/2018)
 
 - if the version is set, don't try to print the version in the parent directory

@@ -1,6 +1,6 @@
 {
   "name": "woof",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "🐶 command line applications made as easy as fetch",
   "main": "index.js",
   "scripts": {
