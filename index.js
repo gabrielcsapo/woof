@@ -37,7 +37,20 @@ module.exports = function Woof(helpMessage, options={}) {
   let helpMap = { 'help': true, '--help': true };
 
   // loop through the args, either command line or given
-  args.forEach((arg, i) => {
+  let arg = '';
+
+  while((arg = args.shift()) !== undefined) {
+
+    if(arg.indexOf('=') > -1) {
+      let parsed = arg.split('=');
+
+      // add the values to the original array
+      args.push(parsed[0]);
+      args.push(parsed[1]);
+
+      // continue from the next true argument
+      continue;
+    }
     // The user has requested either of these values and further arguments should not be parsed
     if(program['error'] || program['version'] || program['help']) return;
 
@@ -63,15 +76,16 @@ module.exports = function Woof(helpMessage, options={}) {
     }
 
     // check the flag maps see if it exists
+    // since we are working off a stack, the next value is always 0, so we can shift the next value to get it
     if(flagMap[arg]) {
       let { type, name } = flagMap[arg];
 
       switch(type) {
         case 'string':
-          program[name] = args[i + 1];
+          program[name] = args.shift();
         break;
         case 'integer':
-          program[name] = parseInt(args[i + 1]);
+          program[name] = parseInt(args.shift());
         break;
         case 'boolean':
         default:
@@ -95,7 +109,7 @@ module.exports = function Woof(helpMessage, options={}) {
     }
 
     if(commandMap[arg]) program[commandMap[arg].name] = true;
-  });
+  }
 
   return program;
 };

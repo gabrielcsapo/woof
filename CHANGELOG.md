@@ -1,3 +1,13 @@
+# 0.3.1 (02/21/2018)
+
+- can now handle arguments formatted like `{key}={value}` in any form such as:
+  - `-{shorthand}={value}`
+  - `--{shorthand}={value}`
+  - `--{key}={value}`
+  - `-{key}={value}`
+  - `{key}={value}`
+- internal mechanism for dealing with arguments has been switched from a access loop, to a stack based approach to retrieving values
+
 # 0.3.0 (01/31/2018)
 
 - adds a validate parameter on flags that will let the developer validate content while its being parsed. If there is an error with the parsing it will set the error object on the output.

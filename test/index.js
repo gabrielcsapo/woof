@@ -5,7 +5,7 @@ const test = require('tape');
 const woof = require('../');
 
 test('woof', (t) => {
-  t.plan(7);
+  t.plan(8);
 
   t.test('should be able to take in args argument', (t) => {
     const cli = woof('', {
@@ -244,6 +244,41 @@ test('woof', (t) => {
     });
 
     t.deepEqual(cli, { unicorn: 'blue', error: 'the value passed into --unicorn is not acceptable: blue' });
+    t.end();
+  });
+
+  t.test('should be able to handle `=` in args', (t) => {
+    const cli = woof('', {
+      args: ['start', '--unicorn=blue', '--rainbow', 'amount=10', '-h=150'],
+      commands: {
+        start: {
+          alias: 's'
+        }
+      },
+      flags: {
+        rainbow: {
+          type: 'boolean',
+          alias: 'r'
+        },
+        amount: {
+          type: 'integer',
+          alias: 'a',
+          amount: 1
+        },
+        height: {
+          type: 'integer',
+          alias: 'h',
+          amount: 100
+        },
+        unicorn: {
+          type: 'string',
+          alias: 'u',
+          default: 'rainbow'
+        }
+      }
+    });
+
+    t.deepEqual(cli, { unicorn: 'blue', start: true, rainbow: true, amount: 10, height: 150 });
     t.end();
   });
 
