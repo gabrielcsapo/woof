@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 
-const test = require('tape');
+const test = require('tape')
 
-const woof = require('../');
+const woof = require('../')
 
 test('woof', (t) => {
-  t.plan(8);
-
   t.test('should be able to take in args argument', (t) => {
+    t.plan(1)
+
     const cli = woof('', {
       args: ['start', '--unicorn', 'rainbow', '--rainbow', '--amount', '10'],
       commands: {
@@ -31,13 +31,19 @@ test('woof', (t) => {
           default: 'rainbow'
         }
       }
-    });
+    })
 
-    t.deepEqual(cli, { unicorn: 'rainbow', start: true, rainbow: true, amount: 10 });
-    t.end();
-  });
+    t.deepEqual(cli, {
+      unicorn: 'rainbow',
+      start: true,
+      rainbow: true,
+      amount: 10
+    })
+  })
 
   t.test('should respond with defaults', (t) => {
+    t.plan(1)
+
     const cli = woof('', {
       commands: {
         start: {
@@ -55,19 +61,22 @@ test('woof', (t) => {
           default: 'rainbow'
         }
       }
-    });
+    })
 
-    t.deepEqual(cli, { unicorn: 'rainbow' });
-    t.end();
-  });
+    t.deepEqual(cli, {
+      unicorn: 'rainbow'
+    })
+  })
 
   t.test('should respond with help menu', (t) => {
-    let logs = [];
-    const oldLog = process.stdout.write;
+    t.plan(2)
 
-    process.stdout.write = function() {
-      logs.push(Array.prototype.join.call(arguments, ' '));
-    };
+    let logs = []
+    const oldLog = process.stdout.write
+
+    process.stdout.write = function () {
+      logs.push(Array.prototype.join.call(arguments, ' '))
+    }
 
     const cli = woof(`
       Usage
@@ -89,8 +98,7 @@ test('woof', (t) => {
 
         $ foo --unicorn sea
         🌊 🦄 🌊
-    `,
-    {
+    `, {
       args: ['--help'],
       commands: {
         start: {
@@ -108,21 +116,25 @@ test('woof', (t) => {
           default: 'rainbow'
         }
       }
-    });
-    process.stdout.write = oldLog;
+    })
+    process.stdout.write = oldLog
 
-    t.deepEqual(logs[0], '\n Usage\n $ foo <input>\n\n Commands:\n   start, -s               Starts foo!\n\n Options\n   --rainbow, -r           Include a rainbow\n   --unicorn, -u [type]    Include a unicorn [rainbow|sea]\n\n Examples\n   $ foo unicorns --rainbow\n   🌈 unicorns 🌈\n\n   $ foo --unicorn rainbow\n   🌈 🦄 🌈\n\n   $ foo --unicorn sea\n   🌊 🦄 🌊\n    \n');
-    t.deepEqual(cli, { unicorn: 'rainbow', help: true });
-    t.end();
-  });
+    t.deepEqual(logs[0], '\n Usage\n $ foo <input>\n\n Commands:\n   start, -s               Starts foo!\n\n Options\n   --rainbow, -r           Include a rainbow\n   --unicorn, -u [type]    Include a unicorn [rainbow|sea]\n\n Examples\n   $ foo unicorns --rainbow\n   🌈 unicorns 🌈\n\n   $ foo --unicorn rainbow\n   🌈 🦄 🌈\n\n   $ foo --unicorn sea\n   🌊 🦄 🌊\n    \n')
+    t.deepEqual(cli, {
+      unicorn: 'rainbow',
+      help: true
+    })
+  })
 
   t.test('should respond with version', (t) => {
-    let logs = [];
-    const oldLog = process.stdout.write;
+    t.plan(2)
 
-    process.stdout.write = function() {
-      logs.push(Array.prototype.join.call(arguments, ' '));
-    };
+    let logs = []
+    const oldLog = process.stdout.write
+
+    process.stdout.write = function () {
+      logs.push(Array.prototype.join.call(arguments, ' '))
+    }
 
     const cli = woof(`
       Usage
@@ -144,8 +156,7 @@ test('woof', (t) => {
 
         $ foo --unicorn sea
         🌊 🦄 🌊
-    `,
-    {
+    `, {
       args: ['--version'],
       commands: {
         start: {
@@ -163,21 +174,25 @@ test('woof', (t) => {
           default: 'rainbow'
         }
       }
-    });
-    process.stdout.write = oldLog;
+    })
+    process.stdout.write = oldLog
 
-    t.deepEqual(logs[0], 'v?\n');
-    t.deepEqual(cli, { unicorn: 'rainbow', version: true });
-    t.end();
-  });
+    t.deepEqual(logs[0], 'v?\n')
+    t.deepEqual(cli, {
+      unicorn: 'rainbow',
+      version: true
+    })
+  })
 
   t.test('should respond with overriden version', (t) => {
-    let logs = [];
-    const oldLog = process.stdout.write;
+    t.plan(2)
 
-    process.stdout.write = function() {
-      logs.push(Array.prototype.join.call(arguments, ' '));
-    };
+    let logs = []
+    const oldLog = process.stdout.write
+
+    process.stdout.write = function () {
+      logs.push(Array.prototype.join.call(arguments, ' '))
+    }
 
     const cli = woof(`
       Usage
@@ -199,8 +214,7 @@ test('woof', (t) => {
 
         $ foo --unicorn sea
         🌊 🦄 🌊
-    `,
-    {
+    `, {
       args: ['--version'],
       version: '1.0.0',
       commands: {
@@ -219,35 +233,42 @@ test('woof', (t) => {
           default: 'rainbow'
         }
       }
-    });
-    process.stdout.write = oldLog;
+    })
+    process.stdout.write = oldLog
 
-    t.deepEqual(logs[0], 'v1.0.0\n');
-    t.deepEqual(cli, { unicorn: 'rainbow', version: true });
-    t.end();
-  });
+    t.deepEqual(logs[0], 'v1.0.0\n')
+    t.deepEqual(cli, {
+      unicorn: 'rainbow',
+      version: true
+    })
+  })
 
   t.test('should respond with a default validate error', (t) => {
-    const cli = woof('',
-    {
+    t.plan(1)
+
+    const cli = woof('', {
       args: ['--unicorn', 'blue'],
       flags: {
         unicorn: {
           type: 'string',
           alias: 'u',
           default: 'rainbow',
-          validate: function(value) {
-            return ['rainbow', 'sea'].indexOf(value) > -1;
+          validate: function (value) {
+            return ['rainbow', 'sea'].indexOf(value) > -1
           }
         }
       }
-    });
+    })
 
-    t.deepEqual(cli, { unicorn: 'blue', error: 'the value passed into --unicorn is not acceptable: blue' });
-    t.end();
-  });
+    t.deepEqual(cli, {
+      unicorn: 'blue',
+      error: 'the value passed into --unicorn is not acceptable: blue'
+    })
+  })
 
   t.test('should be able to handle `=` in args', (t) => {
+    t.plan(1)
+
     const cli = woof('', {
       args: ['start', '--unicorn=blue', '--rainbow', 'amount=10', '-h=150'],
       commands: {
@@ -276,29 +297,63 @@ test('woof', (t) => {
           default: 'rainbow'
         }
       }
-    });
+    })
 
-    t.deepEqual(cli, { unicorn: 'blue', start: true, rainbow: true, amount: 10, height: 150 });
-    t.end();
-  });
+    t.deepEqual(cli, {
+      unicorn: 'blue',
+      start: true,
+      rainbow: true,
+      amount: 10,
+      height: 150
+    })
+  })
 
   t.test('should respond with a custom validate error', (t) => {
-    const cli = woof('',
-    {
+    t.plan(1)
+
+    const cli = woof('', {
       args: ['--unicorn', 'blue'],
       flags: {
         unicorn: {
           type: 'string',
           alias: 'u',
           default: 'rainbow',
-          validate: function(value) {
-            return ['rainbow', 'sea'].indexOf(value) === -1 ? `please providate a valid unicorn type (rainbow|sea), '${value}' is not a valid option` : true;
+          validate: function (value) {
+            return ['rainbow', 'sea'].indexOf(value) === -1 ? `please providate a valid unicorn type (rainbow|sea), '${value}' is not a valid option` : true
           }
         }
       }
-    });
+    })
 
-    t.deepEqual(cli, { unicorn: 'blue', error: new Error('please providate a valid unicorn type (rainbow|sea), \'blue\' is not a valid option') });
-    t.end();
-  });
-});
+    t.deepEqual(cli, {
+      unicorn: 'blue',
+      error: new Error('please providate a valid unicorn type (rainbow|sea), \'blue\' is not a valid option')
+    })
+  })
+
+  t.test('should select the defaultCommand when no command is passed in', (t) => {
+    t.plan(1)
+
+    const cli = woof('', {
+      args: ['--unicorn', 'blue'],
+      defaultCommand: 'start',
+      commands: {
+        start: {
+          alias: 's'
+        }
+      },
+      flags: {
+        unicorn: {
+          type: 'string',
+          alias: 'u',
+          default: 'rainbow'
+        }
+      }
+    })
+
+    t.deepEqual(cli, {
+      unicorn: 'blue',
+      start: true
+    })
+  })
+})

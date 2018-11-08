@@ -1,3 +1,8 @@
+# 0.3.2 (11/07/2018)
+
+- adds option for default command
+- cleans up variable declarations
+
 # 0.3.1 (02/21/2018)
 
 - can now handle arguments formatted like `{key}={value}` in any form such as:

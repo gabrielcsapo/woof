@@ -31,6 +31,7 @@ const cli = woof(`
 
   Commands:
     start, -s               Starts foo!
+    compile, -c             Compile foo!
 
   Options
     --rainbow, -r           Include a rainbow
@@ -49,6 +50,9 @@ const cli = woof(`
   commands: {
     start: {
       alias: 's'
+    },
+    compile: {
+      alias: 'c'
     }
   },
   flags: {
@@ -60,8 +64,8 @@ const cli = woof(`
       type: 'string',
       alias: 'u',
       default: 'rainbow',
-      validate: function(value) {
-        return ['rainbow', 'sea'].indexOf(value) > -1;
+      validate: function (value) {
+        return ['rainbow', 'sea'].indexOf(value) === -1 ? `please providate a valid unicorn type (rainbow|sea), '${value}' is not a valid option` : true
       }
     }
   }

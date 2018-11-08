@@ -1,10 +1,10 @@
 {
   "name": "woof",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "🐶 command line applications made as easy as fetch",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint index.js test",
+    "lint": "standard",
     "test": "tape test/**.js",
     "coverage": "tap test --coverage --coverage-report=lcov"
   },
@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/gabrielcsapo/woof#readme",
   "devDependencies": {
-    "eslint": "^4.14.0",
+    "standard": "^12.0.1",
     "tap": "^11.0.1",
     "tape": "^4.8.0"
   }
