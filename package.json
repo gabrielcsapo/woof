@@ -20,7 +20,7 @@
   "homepage": "https://github.com/gabrielcsapo/woof#readme",
   "devDependencies": {
     "standard": "^12.0.1",
-    "tap": "^11.0.1",
+    "tap": "^12.0.1",
     "tape": "^4.8.0"
   }
 }
