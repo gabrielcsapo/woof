@@ -1,3 +1,7 @@
+# 0.4.0 (3/31/2019)
+
+- adds list option that will allow you to define a list type
+
 # 0.3.2 (11/07/2018)
 
 - adds option for default command

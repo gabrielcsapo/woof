@@ -4,8 +4,8 @@ const test = require('tape')
 
 const woof = require('../')
 
-test('woof', (t) => {
-  t.test('should be able to take in args argument', (t) => {
+test('woof', t => {
+  t.test('should be able to take in args argument', t => {
     t.plan(1)
 
     const cli = woof('', {
@@ -41,7 +41,7 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should respond with defaults', (t) => {
+  t.test('should respond with defaults', t => {
     t.plan(1)
 
     const cli = woof('', {
@@ -68,7 +68,7 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should respond with help menu', (t) => {
+  t.test('should respond with help menu', t => {
     t.plan(2)
 
     let logs = []
@@ -126,7 +126,7 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should respond with version', (t) => {
+  t.test('should respond with version', t => {
     t.plan(2)
 
     let logs = []
@@ -184,7 +184,7 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should respond with overriden version', (t) => {
+  t.test('should respond with overriden version', t => {
     t.plan(2)
 
     let logs = []
@@ -243,7 +243,7 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should respond with a default validate error', (t) => {
+  t.test('should respond with a default validate error', t => {
     t.plan(1)
 
     const cli = woof('', {
@@ -266,7 +266,7 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should be able to handle `=` in args', (t) => {
+  t.test('should be able to handle `=` in args', t => {
     t.plan(1)
 
     const cli = woof('', {
@@ -308,7 +308,24 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should respond with a custom validate error', (t) => {
+  t.test('should be able to parse flag defined a list type', t => {
+    t.plan(1)
+
+    const cli = woof('', {
+      args: ['--paths', '/foo/bar,/bar/foo'],
+      flags: {
+        paths: {
+          type: 'list',
+          alias: 'p',
+          default: []
+        }
+      }
+    })
+
+    t.deepEqual(cli, { paths: [ '/foo/bar', '/bar/foo' ] })
+  })
+
+  t.test('should respond with a custom validate error', t => {
     t.plan(1)
 
     const cli = woof('', {
@@ -331,7 +348,7 @@ test('woof', (t) => {
     })
   })
 
-  t.test('should select the defaultCommand when no command is passed in', (t) => {
+  t.test('should select the defaultCommand when no command is passed in', t => {
     t.plan(1)
 
     const cli = woof('', {

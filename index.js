@@ -88,6 +88,9 @@ function Woof (helpMessage, options = {}) {
         case 'integer':
           program[name] = parseInt(args.shift())
           break
+        case 'list':
+          program[name] = args.shift().split(',')
+          break
         case 'boolean':
         default:
           program[name] = true

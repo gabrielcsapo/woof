@@ -1,6 +1,6 @@
 {
   "name": "woof",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "🐶 command line applications made as easy as fetch",
   "main": "index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/gabrielcsapo/woof#readme",
   "devDependencies": {
     "standard": "^12.0.1",
-    "tap": "^12.0.1",
-    "tape": "^4.8.0"
+    "tap": "^12.6.1",
+    "tape": "^4.10.1"
   }
 }
