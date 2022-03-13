@@ -20,8 +20,6 @@ const { dedent, flatten } = require('./util')
 function Woof (helpMessage, options = {}) {
   delete require.cache[__filename]
 
-  const parentDir = path.dirname(module.parent.filename)
-
   const program = {}
   const { version, defaultCommand, args = process.argv.slice(2), flags = {}, commands = {} } = options
 
@@ -69,6 +67,8 @@ function Woof (helpMessage, options = {}) {
       } else {
         // try to get the version from the current applications package.json
         try {
+          const parentDir = path.dirname(module.parent.filename);
+
           process.stdout.write(`v${require(`${parentDir}/package.json`).version}\n`)
         } catch (ex) {
           process.stdout.write('v?\n')

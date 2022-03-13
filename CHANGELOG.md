@@ -1,3 +1,7 @@
+# 0.4.1 (03/13/2022)
+
+- use `module.parent.filename` when possible, do not fail in esm
+
 # 0.4.0 (3/31/2019)
 
 - adds list option that will allow you to define a list type
